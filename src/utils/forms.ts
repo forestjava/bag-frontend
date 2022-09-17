@@ -17,7 +17,7 @@ export const useXForm = <TFieldValues extends FieldValues = FieldValues>(options
   const input = (key: keyof TFieldValues) => {
     return {
       disabled: options?.disabled, // TODO skeleton onLoading?
-      value: changes[key] || options?.defaultValues?.[key],
+      value: (changes[key] || options?.defaultValues?.[key]) as any,
       onChangeValue: (value: any) => change({ ...changes, [key]: value }),
     };
   };
