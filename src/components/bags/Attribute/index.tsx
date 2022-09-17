@@ -7,9 +7,9 @@ import { useAttributeForm } from '@components/forms/attribute';
 import { InputBoolean } from '@components/molecules/InputBoolean';
 import { useParams } from 'react-router-dom';
 import { Type } from '../../../generated/graphql';
-import { AttributesButtonSelect } from '../AttributesButtonSelect';
+import { TypesButtonSelect } from '../TypesButtonSelect';
 import { EntititesButtonSelect } from '../EntititesButtonSelect';
-import { InputType } from '../InputType';
+import { AttributesButtonSelect } from '../AttributesButtonSelect';
 
 export const Attribute = () => {
   const { id: parameterEntityId } = useParams();
@@ -29,20 +29,23 @@ export const Attribute = () => {
         <InputLabel label='Query' {...input('query')} />
         <InputLabel label='Title' {...input('title')} />
 
-        <Box variant='buttons-row' className='items-end'>
-          <InputType label='Type' {...input('type')} className='pr-10' />
-          {values.type === Type.Reference && (
-            <>
-              <EntititesButtonSelect {...input('typeReference')} />
-              <AttributesButtonSelect entityId={values.typeReference?.id!} {...input('typeReferencePresent')} />
-            </>
-          )}
-          {values.type === Type.ReferenceList && (
-            <>
-              <EntititesButtonSelect {...input('typeReferenceList')} />
-              <AttributesButtonSelect entityId={values.typeReferenceList?.id!} {...input('typeReferencePresent')} />
-            </>
-          )}
+        <Box variant='label-input-group'>
+          <label>Type</label>
+          <Box variant='buttons-row'>
+            <TypesButtonSelect {...input('type')} className='pr-10' />
+            {values.type === Type.Reference && (
+              <>
+                <EntititesButtonSelect {...input('typeReference')} />
+                <AttributesButtonSelect entityId={values.typeReference?.id!} {...input('typeReferencePresent')} />
+              </>
+            )}
+            {values.type === Type.ReferenceList && (
+              <>
+                <EntititesButtonSelect {...input('typeReferenceList')} />
+                <AttributesButtonSelect entityId={values.typeReferenceList?.id!} {...input('typeReferencePresent')} />
+              </>
+            )}
+          </Box>
         </Box>
         <InputBoolean label='Required' {...input('required')} />
         <InputBoolean label='Show in list' {...input('list')} />
