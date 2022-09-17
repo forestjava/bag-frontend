@@ -7,18 +7,18 @@ import { useStyles } from '@components/providers/StylesProvider';
 
 type InputGhostProps = React.InputHTMLAttributes<HTMLInputElement> & {
   className?: string;
-  initialValue?: string | null;
+  value?: string | null;
   onChangeValue?: (value: string) => void;
 };
 
 export const InputGhost = React.forwardRef<HTMLInputElement, InputGhostProps>(
-  ({ className, initialValue, onChange, onChangeValue, ...props }, ref) => {
+  ({ className, value, onChange, onChangeValue, ...props }, ref) => {
     const styles = useStyles(ds);
     return (
       <input
         ref={ref}
         className={cn(styles.ghost, className)}
-        defaultValue={initialValue || ''} // uncontrolled components
+        value={value || ''} // controlled components
         onChange={(evt) => {
           onChange && onChange(evt);
           onChangeValue && onChangeValue(evt.target.value);

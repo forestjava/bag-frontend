@@ -4,12 +4,12 @@ import { EntitiesQuery, SortOrder, useEntitiesQuery } from '../../../generated/g
 
 type Props = {
   className?: string;
-  initialValue?: Partial<EntitiesQuery['entities']>;
+  value?: Partial<EntitiesQuery['entities']>;
   onChangeValue?: (value: Partial<EntitiesQuery['entities']>) => void;
   disabled?: boolean;
   required?: boolean;
 };
-export const EntititesButtonSelect: React.FC<Props> = ({ className, initialValue, onChangeValue, disabled }) => {
+export const EntititesButtonSelect: React.FC<Props> = ({ className, value, onChangeValue, disabled }) => {
   const { data } = useEntitiesQuery({ orderBy: { id: SortOrder.Asc } });
   return data ? (
     <ButtonSelect
@@ -17,7 +17,7 @@ export const EntititesButtonSelect: React.FC<Props> = ({ className, initialValue
       placeholder='Select type'
       options={data.entities}
       present={(entity) => entity.name}
-      initialValue={initialValue}
+      value={value}
       onChangeValue={onChangeValue}
       disabled={disabled}
     />

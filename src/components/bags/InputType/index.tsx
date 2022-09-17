@@ -10,20 +10,20 @@ import { Type } from '../../../generated/graphql';
 type Props = {
   label: string;
   className?: string;
-  initialValue?: Type;
+  value?: Type;
   onChangeValue?: (value: Type) => void;
   disabled?: boolean;
   required?: boolean;
 };
 
-export const InputType: React.FC<Props> = ({ label, className, initialValue, onChangeValue, disabled, required }) => {
+export const InputType: React.FC<Props> = ({ label, className, value, onChangeValue, disabled, required }) => {
   const styles = useStyles(ds);
   return (
     <Box variant='label-input-group'>
       <label>{label}</label>
       <select
         className={cn(styles.input, className)}
-        defaultValue={initialValue}
+        value={value}
         onChange={(event) => {
           const value = event.target.value as Type;
           onChangeValue && onChangeValue(value);

@@ -19,6 +19,7 @@ export const Dashboard: React.FC = () => {
         <Route path='/add/*' element={<Entity />} />
       </Routes>
       <Routes>
+        <Route path='/' element={<Hint />} />
         <Route path='/edit/:id' element={<Hint>Select an attribute</Hint>} />
         <Route path='/add' element={<Hint>Save to define attributes</Hint>} />
         <Route path='/edit/:id/:attribute' element={<Attribute />} />

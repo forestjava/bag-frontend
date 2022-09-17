@@ -3,7 +3,7 @@ import React from 'react';
 import { Heading } from '../../atoms/Heading';
 
 type Props = {
-  children: React.ReactNode;
+  children?: React.ReactNode;
 };
 
 export const Hint: React.FC<Props> = ({ children }) => {

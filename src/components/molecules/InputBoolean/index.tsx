@@ -5,20 +5,13 @@ import React from 'react';
 type Props = {
   label: string;
   className?: string;
-  initialValue?: boolean;
+  value?: boolean;
   onChangeValue?: (value: boolean) => void;
   disabled?: boolean;
   required?: boolean;
 };
 
-export const InputBoolean: React.FC<Props> = ({
-  label,
-  className,
-  initialValue,
-  onChangeValue,
-  disabled,
-  required,
-}) => {
+export const InputBoolean: React.FC<Props> = ({ label, className, value, onChangeValue, disabled, required }) => {
   return (
     <Box className='flex flex-row gap-4 items-center text-silver-400'>
       <label>{label}</label>
@@ -27,7 +20,7 @@ export const InputBoolean: React.FC<Props> = ({
         className={className}
         disabled={disabled}
         required={required}
-        defaultChecked={initialValue}
+        checked={value}
         onChange={(evt) => onChangeValue && onChangeValue(evt.target.checked)}
       />
     </Box>

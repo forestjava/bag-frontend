@@ -22,7 +22,7 @@ export type ButtonSelectProps<DataType = any> = {
   options: DataType[];
   present: (value: DataType) => string; // should return text representation of passed `value` using `DataType` props
 
-  initialValue?: DataType;
+  value?: DataType;
   onChangeValue?: (value: DataType) => void;
 };
 
@@ -32,16 +32,11 @@ export const ButtonSelect: React.FC<ButtonSelectProps> = ({
   // TODO required?: boolean,
   options,
   present,
-  initialValue,
+  value,
   onChangeValue,
   ...props
 }) => {
   const styles = useStyles(ds);
-
-  const [value, setValue] = React.useState(initialValue);
-  React.useEffect(() => {
-    if (!value) setValue(initialValue);
-  }, [initialValue]);
 
   const button = value ? present(value) : placeholder;
 
@@ -73,7 +68,7 @@ export const ButtonSelect: React.FC<ButtonSelectProps> = ({
                 <Button
                   variant='select-item'
                   onClick={() => {
-                    setValue(value);
+                    // setInnerValue(value);
                     onChangeValue && onChangeValue(value);
                     popover.close();
                   }}
