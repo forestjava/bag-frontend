@@ -1,0 +1,44 @@
+query Attributes($orderBy: [AttributeOrderByWithRelationInput!]) {
+  attributes(orderBy: $orderBy) {
+    id
+    name
+  }
+}
+
+query Attribute($where: AttributeWhereUniqueInput!) {
+  attribute(where: $where) {
+    id
+    name
+    query
+    title
+    type
+    typeReference {
+      id
+      name
+    }
+    typeReferenceList {
+      id
+      name
+    }
+    required
+    list
+  }
+}
+
+mutation CreateOneAttribute($data: AttributeCreateInput!) {
+  createOneAttribute(data: $data) {
+    id
+  }
+}
+
+mutation UpdateOneAttribute($data: AttributeUpdateInput!, $where: AttributeWhereUniqueInput!) {
+  updateOneAttribute(data: $data, where: $where) {
+    id
+  }
+}
+
+mutation DeleteOneAttribute($where: AttributeWhereUniqueInput!) {
+  deleteOneAttribute(where: $where) {
+    id
+  }
+}

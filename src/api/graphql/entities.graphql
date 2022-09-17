@@ -1,0 +1,64 @@
+query Entities($orderBy: [EntityOrderByWithRelationInput!]) {
+  entities(orderBy: $orderBy) {
+    id
+    name
+  }
+}
+
+query Entity($where: EntityWhereUniqueInput!) {
+  entity(where: $where) {
+    id
+    name
+    itemName
+    listName
+    attributes {
+      id
+      name
+      query
+      title
+      type
+      required
+      list
+      typeReference {
+        id
+        name
+      }
+      typeReferenceList {
+        id
+        name
+      }
+    }
+    references {
+      id
+      entity {
+        id
+        listName
+      }
+    }
+    referenceLists {
+      id
+      entity {
+        id
+        itemName
+      }
+    }
+  }
+}
+
+mutation CreateOneEntity($data: EntityCreateInput!) {
+  createOneEntity(data: $data) {
+    id
+  }
+}
+
+mutation UpdateOneEntity($data: EntityUpdateInput!, $where: EntityWhereUniqueInput!) {
+  updateOneEntity(data: $data, where: $where) {
+    id
+  }
+}
+
+mutation DeleteOneEntity($where: EntityWhereUniqueInput!) {
+  deleteOneEntity(where: $where) {
+    id
+  }
+}

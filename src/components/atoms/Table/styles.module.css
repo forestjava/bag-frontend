@@ -1,0 +1,30 @@
+.table {
+  @apply border border-[#EDF0F2];
+  @apply rounded-md overflow-hidden;
+}
+
+.table table {
+  @apply table-auto w-full border-collapse;
+}
+
+.table thead {
+  @apply bg-[#EDF0F2];
+}
+
+.table thead th {
+  @apply text-sm font-bold !text-[#8597A9];
+  @apply text-left px-2 py-2;
+  @apply whitespace-nowrap;
+}
+
+.table tbody {
+}
+
+.table tbody tr {
+  @apply hover:bg-silver-input;
+}
+
+.table tbody td {
+  @apply px-2 py-2 text-sm text-silver-400;
+  @apply whitespace-nowrap;
+}

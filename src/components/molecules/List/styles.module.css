@@ -1,0 +1,22 @@
+.selectedList {
+  @apply flex flex-row gap-1 items-start !flex-wrap p-2;
+  @apply !h-auto;
+}
+
+.selectedListItem {
+  @apply flex flex-row gap-2 items-center;
+  @apply bg-white text-base text-silver-400 border shadow-sm rounded-xl px-2;
+}
+
+.buttonRemove svg {
+  @apply stroke-rose-300;
+}
+
+.buttonAppend svg {
+  @apply stroke-blue-400;
+  @apply w-7;
+}
+
+.optionsList {
+  @apply border shadow bg-white rounded;
+}

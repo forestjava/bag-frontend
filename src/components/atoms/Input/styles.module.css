@@ -1,0 +1,17 @@
+.ghost {
+  @apply bg-transparent border-none;
+  @apply text-base text-silver-400 px-2;
+  @apply w-full;
+}
+
+.ghost::placeholder {
+  @apply text-base text-silver-400;
+}
+
+.wrapper {
+  @apply w-full;
+}
+
+.wrapper svg {
+  @apply px-2 w-8 stroke-silver-400;
+}

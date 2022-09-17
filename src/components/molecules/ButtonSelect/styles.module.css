@@ -1,0 +1,3 @@
+.list {
+  @apply border shadow bg-white rounded;
+}

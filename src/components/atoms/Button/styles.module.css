@@ -1,0 +1,57 @@
+.button {
+  @apply flex flex-row gap-x-2 justify-center items-center;
+}
+
+.button:disabled {
+  @apply !bg-gray-300 border-none text-gray-500 cursor-not-allowed;
+}
+
+.button svg {
+  @apply w-5;
+}
+
+.ghost {
+  @apply bg-transparent border-none;
+  /* @apply w-full; */
+}
+
+.prominent {
+  @apply px-6 rounded-md;
+  @apply min-w-[6rem] h-hug whitespace-nowrap;
+}
+
+.primary {
+  @apply !bg-blue-400 text-white;
+  @apply hover:!bg-blue-500;
+}
+
+.secondary {
+  @apply text-blue-400 border border-blue-400 text-blue-400;
+  @apply hover:text-blue-500;
+}
+
+.dangerous {
+  @apply text-rose-500 border border-rose-500 text-rose-500;
+  @apply hover:text-rose-600;
+}
+
+.select {
+  @apply border rounded-md !bg-silver-input;
+  @apply h-hug;
+  @apply px-2;
+}
+
+.select .content {
+  @apply w-full;
+  @apply text-base text-silver-400 text-left;
+}
+
+.select svg {
+  @apply stroke-silver-400;
+}
+
+.select-item {
+  @apply text-base text-silver-600 hover:text-white hover:bg-blue-400;
+  @apply px-2 py-1 rounded;
+  @apply w-full justify-start;
+}

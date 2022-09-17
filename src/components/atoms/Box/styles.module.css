@@ -1,0 +1,33 @@
+.input {
+  @apply border rounded-md bg-silver-input;
+  @apply h-hug;
+  @apply flex flex-row p-0 gap-0;
+}
+
+.view {
+  @apply bg-body p-5;
+  @apply flex flex-col gap-4;
+}
+
+.card {
+  @apply bg-white rounded p-5 shadow;
+}
+
+.drawer {
+  @apply absolute right-0 top-0 h-screen w-[33vw];
+  @apply bg-white shadow-lg border;
+  @apply overflow-auto;
+  @apply p-5 flex flex-col gap-4;
+}
+
+.label-input-group {
+  @apply flex flex-col;
+}
+
+.label-input-group label {
+  @apply text-sm text-silver-400;
+}
+
+.buttons-row {
+  @apply flex flex-row gap-2;
+}

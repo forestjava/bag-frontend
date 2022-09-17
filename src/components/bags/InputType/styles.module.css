@@ -1,0 +1,7 @@
+.input {
+  @apply border-none;
+  @apply border rounded-md bg-silver-input;
+  @apply h-hug;
+
+  @apply text-base text-silver-400 px-2;
+}

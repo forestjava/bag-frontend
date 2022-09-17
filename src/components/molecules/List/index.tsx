@@ -1,0 +1,115 @@
+import React from 'react';
+
+// components
+import { Box } from '@components/atoms/Box';
+import { Button } from '@components/atoms/Button';
+
+// styles
+import cn from '@utils/classnames'; // classnames
+import ds from './styles.module.css'; // default styles
+import { useStyles } from '@components/providers/StylesProvider';
+
+import { ReactComponent as IconRemove } from './remove.svg';
+import { ReactComponent as IconAppend } from './append.svg';
+
+import { usePopover } from '@components/providers/PopoversProvider';
+
+export type ListActions<DataType = any> = {
+  append: DataType[];
+  remove: DataType[];
+};
+
+type Props<DataType = any> = {
+  disabled?: boolean;
+  // ... other properties of Button
+
+  className?: string;
+  options: DataType[];
+  compare: (value1: DataType, value2: DataType) => boolean; // should compare passed values using `DataType` keys
+  present: (value: DataType) => string; // should return text representation of value
+  initialValue?: DataType[];
+  onChangeValue?: (value: DataType[]) => void;
+};
+
+export const List: React.FC<Props> = ({
+  className,
+  options,
+  present,
+  compare,
+  initialValue,
+  onChangeValue,
+  ...props
+}) => {
+  const styles = useStyles(ds);
+
+  const [value, setValue] = React.useState(initialValue ?? []);
+  React.useEffect(() => {
+    setValue(initialValue ?? []);
+  }, [initialValue]);
+
+  const remove = (removing: any) => {
+    const nextValue = value.filter((item) => !compare(item, removing));
+    setValue(nextValue);
+    onChangeValue && onChangeValue(nextValue);
+  };
+
+  const append = (item: any) => {
+    const nextValue = [...value, item];
+    setValue(nextValue);
+    onChangeValue && onChangeValue(nextValue);
+  };
+
+  const unselected = (item: any) => !value.find((valueItem) => compare(valueItem, item));
+
+  const trigger = React.useRef(null);
+  const content = React.useRef(null);
+  const popover = usePopover();
+
+  const togglePopover = () => {
+    popover.toggle(trigger, content, { placement: 'bottom' });
+  };
+
+  return (
+    <>
+      <Box variant='input' className={cn(styles.selectedList, className)}>
+        {value.map((item, i) => (
+          <Box key={i} className={styles.selectedListItem}>
+            <span>{present(item)}</span>
+            <Button
+              variant='ghost'
+              icon={<IconRemove />}
+              className={styles.buttonRemove}
+              onClick={() => remove(item)}
+            />
+          </Box>
+        ))}
+        <Button
+          ref={trigger}
+          variant='ghost'
+          icon={<IconAppend />}
+          className={styles.buttonAppend}
+          onClick={() => togglePopover()}
+          {...props}
+        />
+      </Box>
+      {popover.isOpen && (
+        <ul ref={content} className={styles.optionsList}>
+          {options &&
+            options.filter(unselected).map((item, i) => (
+              <li key={i}>
+                <Button
+                  variant='select-item'
+                  onClick={() => {
+                    append(item);
+                    popover.close();
+                  }}
+                >
+                  {present(item)}
+                </Button>
+              </li>
+            ))}
+        </ul>
+      )}
+    </>
+  );
+};
