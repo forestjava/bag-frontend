@@ -1,5 +1,5 @@
-query Attributes($orderBy: [AttributeOrderByWithRelationInput!]) {
-  attributes(orderBy: $orderBy) {
+query Attributes($orderBy: [AttributeOrderByWithRelationInput!], $where: AttributeWhereInput) {
+  attributes(orderBy: $orderBy, where: $where) {
     id
     name
   }
@@ -17,6 +17,10 @@ query Attribute($where: AttributeWhereUniqueInput!) {
       name
     }
     typeReferenceList {
+      id
+      name
+    }
+    typeReferencePresent {
       id
       name
     }

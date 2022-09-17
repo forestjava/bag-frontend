@@ -43,6 +43,7 @@ export const useAttributeForm = (entityId: number, id?: number) => {
     };
     data.typeReference && (input.typeReference = { connect: { id: data.typeReference.id } });
     data.typeReferenceList && (input.typeReferenceList = { connect: { id: data.typeReferenceList.id } });
+    data.typeReferencePresent && (input.typeReferencePresent = { connect: { id: data.typeReferencePresent.id } });
     data.required && (input.required = data.required);
     data.list && (input.list = data.list);
 
@@ -63,6 +64,7 @@ export const useAttributeForm = (entityId: number, id?: number) => {
       data.type && (input.type = { set: data.type });
       data.typeReference && (input.typeReference = { connect: { id: data.typeReference.id } });
       data.typeReferenceList && (input.typeReferenceList = { connect: { id: data.typeReferenceList.id } });
+      data.typeReferencePresent && (input.typeReferencePresent = { connect: { id: data.typeReferencePresent.id } });
       data.required && (input.required = { set: data.required });
       data.list && (input.list = { set: data.list });
       await update({ where: key, data: input });

@@ -10,7 +10,7 @@ import { Hint } from '@components/molecules/Hint';
 
 export const Dashboard: React.FC = () => {
   return (
-    <Box className='grid grid-cols-[2rem,10rem,1fr,1fr] gap-4' as='main'>
+    <Box className='grid grid-cols-[2rem,10rem,3fr,4fr] gap-4 pr-4' as='main'>
       <Toolbar />
       <EntitiesList />
       <Routes>

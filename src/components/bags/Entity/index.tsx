@@ -51,7 +51,7 @@ export const Entity = () => {
                   to={`/edit/${attribute.entity.id}/${attribute.id}`}
                   className={({ isActive }) => cn(styles.link, isActive && styles.active)}
                 >
-                  {attribute.entity.listName}
+                  {`${attribute.entity.listName}:${attribute.name}`}
                 </NavLink>
               ))}
               {entity?.referenceLists?.map((attribute) => (
@@ -60,7 +60,7 @@ export const Entity = () => {
                   to={`/edit/${attribute.entity.id}/${attribute.id}`}
                   className={({ isActive }) => cn(styles.link, isActive && styles.active)}
                 >
-                  {attribute.entity.itemName}
+                  {`${attribute.entity.itemName}:${attribute.name}`}
                 </NavLink>
               ))}
             </Box>

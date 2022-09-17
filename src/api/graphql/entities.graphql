@@ -30,6 +30,7 @@ query Entity($where: EntityWhereUniqueInput!) {
     }
     references {
       id
+      name
       entity {
         id
         listName
@@ -37,6 +38,7 @@ query Entity($where: EntityWhereUniqueInput!) {
     }
     referenceLists {
       id
+      name
       entity {
         id
         itemName

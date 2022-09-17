@@ -39,6 +39,7 @@ export type AggregateEntity = {
 
 export type Attribute = {
   __typename?: 'Attribute';
+  _count?: Maybe<AttributeCount>;
   entity: Entity;
   entityId: Scalars['Int'];
   id: Scalars['Int'];
@@ -53,6 +54,19 @@ export type Attribute = {
   typeReferenceId?: Maybe<Scalars['Int']>;
   typeReferenceList?: Maybe<Entity>;
   typeReferenceListId?: Maybe<Scalars['Int']>;
+  typeReferencePresent?: Maybe<Attribute>;
+  typeReferencePresentId?: Maybe<Scalars['Int']>;
+  typeReferencePresents: Array<Attribute>;
+};
+
+
+export type AttributeTypeReferencePresentsArgs = {
+  cursor?: InputMaybe<AttributeWhereUniqueInput>;
+  distinct?: InputMaybe<Array<AttributeScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<AttributeOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<AttributeWhereInput>;
 };
 
 export type AttributeAvgAggregate = {
@@ -61,6 +75,7 @@ export type AttributeAvgAggregate = {
   id?: Maybe<Scalars['Float']>;
   typeReferenceId?: Maybe<Scalars['Float']>;
   typeReferenceListId?: Maybe<Scalars['Float']>;
+  typeReferencePresentId?: Maybe<Scalars['Float']>;
 };
 
 export type AttributeAvgOrderByAggregateInput = {
@@ -68,6 +83,12 @@ export type AttributeAvgOrderByAggregateInput = {
   id?: InputMaybe<SortOrder>;
   typeReferenceId?: InputMaybe<SortOrder>;
   typeReferenceListId?: InputMaybe<SortOrder>;
+  typeReferencePresentId?: InputMaybe<SortOrder>;
+};
+
+export type AttributeCount = {
+  __typename?: 'AttributeCount';
+  typeReferencePresents: Scalars['Int'];
 };
 
 export type AttributeCountAggregate = {
@@ -84,6 +105,7 @@ export type AttributeCountAggregate = {
   type: Scalars['Int'];
   typeReferenceId: Scalars['Int'];
   typeReferenceListId: Scalars['Int'];
+  typeReferencePresentId: Scalars['Int'];
 };
 
 export type AttributeCountOrderByAggregateInput = {
@@ -98,6 +120,7 @@ export type AttributeCountOrderByAggregateInput = {
   type?: InputMaybe<SortOrder>;
   typeReferenceId?: InputMaybe<SortOrder>;
   typeReferenceListId?: InputMaybe<SortOrder>;
+  typeReferencePresentId?: InputMaybe<SortOrder>;
 };
 
 export type AttributeCreateInput = {
@@ -111,6 +134,8 @@ export type AttributeCreateInput = {
   type: Type;
   typeReference?: InputMaybe<EntityCreateNestedOneWithoutReferencesInput>;
   typeReferenceList?: InputMaybe<EntityCreateNestedOneWithoutReferenceListsInput>;
+  typeReferencePresent?: InputMaybe<AttributeCreateNestedOneWithoutTypeReferencePresentsInput>;
+  typeReferencePresents?: InputMaybe<AttributeCreateNestedManyWithoutTypeReferencePresentInput>;
 };
 
 export type AttributeCreateManyEntityInput = {
@@ -124,6 +149,7 @@ export type AttributeCreateManyEntityInput = {
   type: Type;
   typeReferenceId?: InputMaybe<Scalars['Int']>;
   typeReferenceListId?: InputMaybe<Scalars['Int']>;
+  typeReferencePresentId?: InputMaybe<Scalars['Int']>;
 };
 
 export type AttributeCreateManyEntityInputEnvelope = {
@@ -143,6 +169,7 @@ export type AttributeCreateManyInput = {
   type: Type;
   typeReferenceId?: InputMaybe<Scalars['Int']>;
   typeReferenceListId?: InputMaybe<Scalars['Int']>;
+  typeReferencePresentId?: InputMaybe<Scalars['Int']>;
 };
 
 export type AttributeCreateManyTypeReferenceInput = {
@@ -156,6 +183,7 @@ export type AttributeCreateManyTypeReferenceInput = {
   title: Scalars['String'];
   type: Type;
   typeReferenceListId?: InputMaybe<Scalars['Int']>;
+  typeReferencePresentId?: InputMaybe<Scalars['Int']>;
 };
 
 export type AttributeCreateManyTypeReferenceInputEnvelope = {
@@ -174,10 +202,30 @@ export type AttributeCreateManyTypeReferenceListInput = {
   title: Scalars['String'];
   type: Type;
   typeReferenceId?: InputMaybe<Scalars['Int']>;
+  typeReferencePresentId?: InputMaybe<Scalars['Int']>;
 };
 
 export type AttributeCreateManyTypeReferenceListInputEnvelope = {
   data: Array<AttributeCreateManyTypeReferenceListInput>;
+  skipDuplicates?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type AttributeCreateManyTypeReferencePresentInput = {
+  entityId: Scalars['Int'];
+  id?: InputMaybe<Scalars['Int']>;
+  list?: InputMaybe<Scalars['Boolean']>;
+  name: Scalars['String'];
+  placeholder?: InputMaybe<Scalars['String']>;
+  query: Scalars['String'];
+  required?: InputMaybe<Scalars['Boolean']>;
+  title: Scalars['String'];
+  type: Type;
+  typeReferenceId?: InputMaybe<Scalars['Int']>;
+  typeReferenceListId?: InputMaybe<Scalars['Int']>;
+};
+
+export type AttributeCreateManyTypeReferencePresentInputEnvelope = {
+  data: Array<AttributeCreateManyTypeReferencePresentInput>;
   skipDuplicates?: InputMaybe<Scalars['Boolean']>;
 };
 
@@ -202,6 +250,19 @@ export type AttributeCreateNestedManyWithoutTypeReferenceListInput = {
   createMany?: InputMaybe<AttributeCreateManyTypeReferenceListInputEnvelope>;
 };
 
+export type AttributeCreateNestedManyWithoutTypeReferencePresentInput = {
+  connect?: InputMaybe<Array<AttributeWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<AttributeCreateOrConnectWithoutTypeReferencePresentInput>>;
+  create?: InputMaybe<Array<AttributeCreateWithoutTypeReferencePresentInput>>;
+  createMany?: InputMaybe<AttributeCreateManyTypeReferencePresentInputEnvelope>;
+};
+
+export type AttributeCreateNestedOneWithoutTypeReferencePresentsInput = {
+  connect?: InputMaybe<AttributeWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<AttributeCreateOrConnectWithoutTypeReferencePresentsInput>;
+  create?: InputMaybe<AttributeCreateWithoutTypeReferencePresentsInput>;
+};
+
 export type AttributeCreateOrConnectWithoutEntityInput = {
   create: AttributeCreateWithoutEntityInput;
   where: AttributeWhereUniqueInput;
@@ -217,6 +278,16 @@ export type AttributeCreateOrConnectWithoutTypeReferenceListInput = {
   where: AttributeWhereUniqueInput;
 };
 
+export type AttributeCreateOrConnectWithoutTypeReferencePresentInput = {
+  create: AttributeCreateWithoutTypeReferencePresentInput;
+  where: AttributeWhereUniqueInput;
+};
+
+export type AttributeCreateOrConnectWithoutTypeReferencePresentsInput = {
+  create: AttributeCreateWithoutTypeReferencePresentsInput;
+  where: AttributeWhereUniqueInput;
+};
+
 export type AttributeCreateWithoutEntityInput = {
   list?: InputMaybe<Scalars['Boolean']>;
   name: Scalars['String'];
@@ -227,6 +298,8 @@ export type AttributeCreateWithoutEntityInput = {
   type: Type;
   typeReference?: InputMaybe<EntityCreateNestedOneWithoutReferencesInput>;
   typeReferenceList?: InputMaybe<EntityCreateNestedOneWithoutReferenceListsInput>;
+  typeReferencePresent?: InputMaybe<AttributeCreateNestedOneWithoutTypeReferencePresentsInput>;
+  typeReferencePresents?: InputMaybe<AttributeCreateNestedManyWithoutTypeReferencePresentInput>;
 };
 
 export type AttributeCreateWithoutTypeReferenceInput = {
@@ -239,6 +312,8 @@ export type AttributeCreateWithoutTypeReferenceInput = {
   title: Scalars['String'];
   type: Type;
   typeReferenceList?: InputMaybe<EntityCreateNestedOneWithoutReferenceListsInput>;
+  typeReferencePresent?: InputMaybe<AttributeCreateNestedOneWithoutTypeReferencePresentsInput>;
+  typeReferencePresents?: InputMaybe<AttributeCreateNestedManyWithoutTypeReferencePresentInput>;
 };
 
 export type AttributeCreateWithoutTypeReferenceListInput = {
@@ -251,6 +326,36 @@ export type AttributeCreateWithoutTypeReferenceListInput = {
   title: Scalars['String'];
   type: Type;
   typeReference?: InputMaybe<EntityCreateNestedOneWithoutReferencesInput>;
+  typeReferencePresent?: InputMaybe<AttributeCreateNestedOneWithoutTypeReferencePresentsInput>;
+  typeReferencePresents?: InputMaybe<AttributeCreateNestedManyWithoutTypeReferencePresentInput>;
+};
+
+export type AttributeCreateWithoutTypeReferencePresentInput = {
+  entity: EntityCreateNestedOneWithoutAttributesInput;
+  list?: InputMaybe<Scalars['Boolean']>;
+  name: Scalars['String'];
+  placeholder?: InputMaybe<Scalars['String']>;
+  query: Scalars['String'];
+  required?: InputMaybe<Scalars['Boolean']>;
+  title: Scalars['String'];
+  type: Type;
+  typeReference?: InputMaybe<EntityCreateNestedOneWithoutReferencesInput>;
+  typeReferenceList?: InputMaybe<EntityCreateNestedOneWithoutReferenceListsInput>;
+  typeReferencePresents?: InputMaybe<AttributeCreateNestedManyWithoutTypeReferencePresentInput>;
+};
+
+export type AttributeCreateWithoutTypeReferencePresentsInput = {
+  entity: EntityCreateNestedOneWithoutAttributesInput;
+  list?: InputMaybe<Scalars['Boolean']>;
+  name: Scalars['String'];
+  placeholder?: InputMaybe<Scalars['String']>;
+  query: Scalars['String'];
+  required?: InputMaybe<Scalars['Boolean']>;
+  title: Scalars['String'];
+  type: Type;
+  typeReference?: InputMaybe<EntityCreateNestedOneWithoutReferencesInput>;
+  typeReferenceList?: InputMaybe<EntityCreateNestedOneWithoutReferenceListsInput>;
+  typeReferencePresent?: InputMaybe<AttributeCreateNestedOneWithoutTypeReferencePresentsInput>;
 };
 
 export type AttributeGroupBy = {
@@ -271,6 +376,7 @@ export type AttributeGroupBy = {
   type: Type;
   typeReferenceId?: Maybe<Scalars['Int']>;
   typeReferenceListId?: Maybe<Scalars['Int']>;
+  typeReferencePresentId?: Maybe<Scalars['Int']>;
 };
 
 export type AttributeListRelationFilter = {
@@ -292,6 +398,7 @@ export type AttributeMaxAggregate = {
   type?: Maybe<Type>;
   typeReferenceId?: Maybe<Scalars['Int']>;
   typeReferenceListId?: Maybe<Scalars['Int']>;
+  typeReferencePresentId?: Maybe<Scalars['Int']>;
 };
 
 export type AttributeMaxOrderByAggregateInput = {
@@ -306,6 +413,7 @@ export type AttributeMaxOrderByAggregateInput = {
   type?: InputMaybe<SortOrder>;
   typeReferenceId?: InputMaybe<SortOrder>;
   typeReferenceListId?: InputMaybe<SortOrder>;
+  typeReferencePresentId?: InputMaybe<SortOrder>;
 };
 
 export type AttributeMinAggregate = {
@@ -321,6 +429,7 @@ export type AttributeMinAggregate = {
   type?: Maybe<Type>;
   typeReferenceId?: Maybe<Scalars['Int']>;
   typeReferenceListId?: Maybe<Scalars['Int']>;
+  typeReferencePresentId?: Maybe<Scalars['Int']>;
 };
 
 export type AttributeMinOrderByAggregateInput = {
@@ -335,6 +444,7 @@ export type AttributeMinOrderByAggregateInput = {
   type?: InputMaybe<SortOrder>;
   typeReferenceId?: InputMaybe<SortOrder>;
   typeReferenceListId?: InputMaybe<SortOrder>;
+  typeReferencePresentId?: InputMaybe<SortOrder>;
 };
 
 export type AttributeOrderByRelationAggregateInput = {
@@ -358,6 +468,7 @@ export type AttributeOrderByWithAggregationInput = {
   type?: InputMaybe<SortOrder>;
   typeReferenceId?: InputMaybe<SortOrder>;
   typeReferenceListId?: InputMaybe<SortOrder>;
+  typeReferencePresentId?: InputMaybe<SortOrder>;
 };
 
 export type AttributeOrderByWithRelationInput = {
@@ -375,6 +486,14 @@ export type AttributeOrderByWithRelationInput = {
   typeReferenceId?: InputMaybe<SortOrder>;
   typeReferenceList?: InputMaybe<EntityOrderByWithRelationInput>;
   typeReferenceListId?: InputMaybe<SortOrder>;
+  typeReferencePresent?: InputMaybe<AttributeOrderByWithRelationInput>;
+  typeReferencePresentId?: InputMaybe<SortOrder>;
+  typeReferencePresents?: InputMaybe<AttributeOrderByRelationAggregateInput>;
+};
+
+export type AttributeRelationFilter = {
+  is?: InputMaybe<AttributeWhereInput>;
+  isNot?: InputMaybe<AttributeWhereInput>;
 };
 
 export enum AttributeScalarFieldEnum {
@@ -388,7 +507,8 @@ export enum AttributeScalarFieldEnum {
   Title = 'title',
   Type = 'type',
   TypeReferenceId = 'typeReferenceId',
-  TypeReferenceListId = 'typeReferenceListId'
+  TypeReferenceListId = 'typeReferenceListId',
+  TypeReferencePresentId = 'typeReferencePresentId'
 }
 
 export type AttributeScalarWhereInput = {
@@ -406,6 +526,7 @@ export type AttributeScalarWhereInput = {
   type?: InputMaybe<EnumTypeFilter>;
   typeReferenceId?: InputMaybe<IntNullableFilter>;
   typeReferenceListId?: InputMaybe<IntNullableFilter>;
+  typeReferencePresentId?: InputMaybe<IntNullableFilter>;
 };
 
 export type AttributeScalarWhereWithAggregatesInput = {
@@ -423,6 +544,7 @@ export type AttributeScalarWhereWithAggregatesInput = {
   type?: InputMaybe<EnumTypeWithAggregatesFilter>;
   typeReferenceId?: InputMaybe<IntNullableWithAggregatesFilter>;
   typeReferenceListId?: InputMaybe<IntNullableWithAggregatesFilter>;
+  typeReferencePresentId?: InputMaybe<IntNullableWithAggregatesFilter>;
 };
 
 export type AttributeSumAggregate = {
@@ -431,6 +553,7 @@ export type AttributeSumAggregate = {
   id?: Maybe<Scalars['Int']>;
   typeReferenceId?: Maybe<Scalars['Int']>;
   typeReferenceListId?: Maybe<Scalars['Int']>;
+  typeReferencePresentId?: Maybe<Scalars['Int']>;
 };
 
 export type AttributeSumOrderByAggregateInput = {
@@ -438,6 +561,7 @@ export type AttributeSumOrderByAggregateInput = {
   id?: InputMaybe<SortOrder>;
   typeReferenceId?: InputMaybe<SortOrder>;
   typeReferenceListId?: InputMaybe<SortOrder>;
+  typeReferencePresentId?: InputMaybe<SortOrder>;
 };
 
 export type AttributeUpdateInput = {
@@ -451,6 +575,8 @@ export type AttributeUpdateInput = {
   type?: InputMaybe<EnumTypeFieldUpdateOperationsInput>;
   typeReference?: InputMaybe<EntityUpdateOneWithoutReferencesNestedInput>;
   typeReferenceList?: InputMaybe<EntityUpdateOneWithoutReferenceListsNestedInput>;
+  typeReferencePresent?: InputMaybe<AttributeUpdateOneWithoutTypeReferencePresentsNestedInput>;
+  typeReferencePresents?: InputMaybe<AttributeUpdateManyWithoutTypeReferencePresentNestedInput>;
 };
 
 export type AttributeUpdateManyMutationInput = {
@@ -474,6 +600,11 @@ export type AttributeUpdateManyWithWhereWithoutTypeReferenceInput = {
 };
 
 export type AttributeUpdateManyWithWhereWithoutTypeReferenceListInput = {
+  data: AttributeUpdateManyMutationInput;
+  where: AttributeScalarWhereInput;
+};
+
+export type AttributeUpdateManyWithWhereWithoutTypeReferencePresentInput = {
   data: AttributeUpdateManyMutationInput;
   where: AttributeScalarWhereInput;
 };
@@ -520,6 +651,30 @@ export type AttributeUpdateManyWithoutTypeReferenceNestedInput = {
   upsert?: InputMaybe<Array<AttributeUpsertWithWhereUniqueWithoutTypeReferenceInput>>;
 };
 
+export type AttributeUpdateManyWithoutTypeReferencePresentNestedInput = {
+  connect?: InputMaybe<Array<AttributeWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<AttributeCreateOrConnectWithoutTypeReferencePresentInput>>;
+  create?: InputMaybe<Array<AttributeCreateWithoutTypeReferencePresentInput>>;
+  createMany?: InputMaybe<AttributeCreateManyTypeReferencePresentInputEnvelope>;
+  delete?: InputMaybe<Array<AttributeWhereUniqueInput>>;
+  deleteMany?: InputMaybe<Array<AttributeScalarWhereInput>>;
+  disconnect?: InputMaybe<Array<AttributeWhereUniqueInput>>;
+  set?: InputMaybe<Array<AttributeWhereUniqueInput>>;
+  update?: InputMaybe<Array<AttributeUpdateWithWhereUniqueWithoutTypeReferencePresentInput>>;
+  updateMany?: InputMaybe<Array<AttributeUpdateManyWithWhereWithoutTypeReferencePresentInput>>;
+  upsert?: InputMaybe<Array<AttributeUpsertWithWhereUniqueWithoutTypeReferencePresentInput>>;
+};
+
+export type AttributeUpdateOneWithoutTypeReferencePresentsNestedInput = {
+  connect?: InputMaybe<AttributeWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<AttributeCreateOrConnectWithoutTypeReferencePresentsInput>;
+  create?: InputMaybe<AttributeCreateWithoutTypeReferencePresentsInput>;
+  delete?: InputMaybe<Scalars['Boolean']>;
+  disconnect?: InputMaybe<Scalars['Boolean']>;
+  update?: InputMaybe<AttributeUpdateWithoutTypeReferencePresentsInput>;
+  upsert?: InputMaybe<AttributeUpsertWithoutTypeReferencePresentsInput>;
+};
+
 export type AttributeUpdateWithWhereUniqueWithoutEntityInput = {
   data: AttributeUpdateWithoutEntityInput;
   where: AttributeWhereUniqueInput;
@@ -535,6 +690,11 @@ export type AttributeUpdateWithWhereUniqueWithoutTypeReferenceListInput = {
   where: AttributeWhereUniqueInput;
 };
 
+export type AttributeUpdateWithWhereUniqueWithoutTypeReferencePresentInput = {
+  data: AttributeUpdateWithoutTypeReferencePresentInput;
+  where: AttributeWhereUniqueInput;
+};
+
 export type AttributeUpdateWithoutEntityInput = {
   list?: InputMaybe<NullableBoolFieldUpdateOperationsInput>;
   name?: InputMaybe<StringFieldUpdateOperationsInput>;
@@ -545,6 +705,8 @@ export type AttributeUpdateWithoutEntityInput = {
   type?: InputMaybe<EnumTypeFieldUpdateOperationsInput>;
   typeReference?: InputMaybe<EntityUpdateOneWithoutReferencesNestedInput>;
   typeReferenceList?: InputMaybe<EntityUpdateOneWithoutReferenceListsNestedInput>;
+  typeReferencePresent?: InputMaybe<AttributeUpdateOneWithoutTypeReferencePresentsNestedInput>;
+  typeReferencePresents?: InputMaybe<AttributeUpdateManyWithoutTypeReferencePresentNestedInput>;
 };
 
 export type AttributeUpdateWithoutTypeReferenceInput = {
@@ -557,6 +719,8 @@ export type AttributeUpdateWithoutTypeReferenceInput = {
   title?: InputMaybe<StringFieldUpdateOperationsInput>;
   type?: InputMaybe<EnumTypeFieldUpdateOperationsInput>;
   typeReferenceList?: InputMaybe<EntityUpdateOneWithoutReferenceListsNestedInput>;
+  typeReferencePresent?: InputMaybe<AttributeUpdateOneWithoutTypeReferencePresentsNestedInput>;
+  typeReferencePresents?: InputMaybe<AttributeUpdateManyWithoutTypeReferencePresentNestedInput>;
 };
 
 export type AttributeUpdateWithoutTypeReferenceListInput = {
@@ -569,6 +733,36 @@ export type AttributeUpdateWithoutTypeReferenceListInput = {
   title?: InputMaybe<StringFieldUpdateOperationsInput>;
   type?: InputMaybe<EnumTypeFieldUpdateOperationsInput>;
   typeReference?: InputMaybe<EntityUpdateOneWithoutReferencesNestedInput>;
+  typeReferencePresent?: InputMaybe<AttributeUpdateOneWithoutTypeReferencePresentsNestedInput>;
+  typeReferencePresents?: InputMaybe<AttributeUpdateManyWithoutTypeReferencePresentNestedInput>;
+};
+
+export type AttributeUpdateWithoutTypeReferencePresentInput = {
+  entity?: InputMaybe<EntityUpdateOneRequiredWithoutAttributesNestedInput>;
+  list?: InputMaybe<NullableBoolFieldUpdateOperationsInput>;
+  name?: InputMaybe<StringFieldUpdateOperationsInput>;
+  placeholder?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  query?: InputMaybe<StringFieldUpdateOperationsInput>;
+  required?: InputMaybe<NullableBoolFieldUpdateOperationsInput>;
+  title?: InputMaybe<StringFieldUpdateOperationsInput>;
+  type?: InputMaybe<EnumTypeFieldUpdateOperationsInput>;
+  typeReference?: InputMaybe<EntityUpdateOneWithoutReferencesNestedInput>;
+  typeReferenceList?: InputMaybe<EntityUpdateOneWithoutReferenceListsNestedInput>;
+  typeReferencePresents?: InputMaybe<AttributeUpdateManyWithoutTypeReferencePresentNestedInput>;
+};
+
+export type AttributeUpdateWithoutTypeReferencePresentsInput = {
+  entity?: InputMaybe<EntityUpdateOneRequiredWithoutAttributesNestedInput>;
+  list?: InputMaybe<NullableBoolFieldUpdateOperationsInput>;
+  name?: InputMaybe<StringFieldUpdateOperationsInput>;
+  placeholder?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  query?: InputMaybe<StringFieldUpdateOperationsInput>;
+  required?: InputMaybe<NullableBoolFieldUpdateOperationsInput>;
+  title?: InputMaybe<StringFieldUpdateOperationsInput>;
+  type?: InputMaybe<EnumTypeFieldUpdateOperationsInput>;
+  typeReference?: InputMaybe<EntityUpdateOneWithoutReferencesNestedInput>;
+  typeReferenceList?: InputMaybe<EntityUpdateOneWithoutReferenceListsNestedInput>;
+  typeReferencePresent?: InputMaybe<AttributeUpdateOneWithoutTypeReferencePresentsNestedInput>;
 };
 
 export type AttributeUpsertWithWhereUniqueWithoutEntityInput = {
@@ -589,6 +783,17 @@ export type AttributeUpsertWithWhereUniqueWithoutTypeReferenceListInput = {
   where: AttributeWhereUniqueInput;
 };
 
+export type AttributeUpsertWithWhereUniqueWithoutTypeReferencePresentInput = {
+  create: AttributeCreateWithoutTypeReferencePresentInput;
+  update: AttributeUpdateWithoutTypeReferencePresentInput;
+  where: AttributeWhereUniqueInput;
+};
+
+export type AttributeUpsertWithoutTypeReferencePresentsInput = {
+  create: AttributeCreateWithoutTypeReferencePresentsInput;
+  update: AttributeUpdateWithoutTypeReferencePresentsInput;
+};
+
 export type AttributeWhereInput = {
   AND?: InputMaybe<Array<AttributeWhereInput>>;
   NOT?: InputMaybe<Array<AttributeWhereInput>>;
@@ -607,6 +812,9 @@ export type AttributeWhereInput = {
   typeReferenceId?: InputMaybe<IntNullableFilter>;
   typeReferenceList?: InputMaybe<EntityRelationFilter>;
   typeReferenceListId?: InputMaybe<IntNullableFilter>;
+  typeReferencePresent?: InputMaybe<AttributeRelationFilter>;
+  typeReferencePresentId?: InputMaybe<IntNullableFilter>;
+  typeReferencePresents?: InputMaybe<AttributeListRelationFilter>;
 };
 
 export type AttributeWhereUniqueInput = {
@@ -1511,6 +1719,7 @@ export enum Type {
 
 export type AttributesQueryVariables = Exact<{
   orderBy?: InputMaybe<Array<AttributeOrderByWithRelationInput> | AttributeOrderByWithRelationInput>;
+  where?: InputMaybe<AttributeWhereInput>;
 }>;
 
 
@@ -1521,7 +1730,7 @@ export type AttributeQueryVariables = Exact<{
 }>;
 
 
-export type AttributeQuery = { __typename?: 'Query', attribute?: { __typename?: 'Attribute', id: number, name: string, query: string, title: string, type: Type, required?: boolean | null, list?: boolean | null, typeReference?: { __typename?: 'Entity', id: number, name: string } | null, typeReferenceList?: { __typename?: 'Entity', id: number, name: string } | null } | null };
+export type AttributeQuery = { __typename?: 'Query', attribute?: { __typename?: 'Attribute', id: number, name: string, query: string, title: string, type: Type, required?: boolean | null, list?: boolean | null, typeReference?: { __typename?: 'Entity', id: number, name: string } | null, typeReferenceList?: { __typename?: 'Entity', id: number, name: string } | null, typeReferencePresent?: { __typename?: 'Attribute', id: number, name: string } | null } | null };
 
 export type CreateOneAttributeMutationVariables = Exact<{
   data: AttributeCreateInput;
@@ -1557,7 +1766,7 @@ export type EntityQueryVariables = Exact<{
 }>;
 
 
-export type EntityQuery = { __typename?: 'Query', entity?: { __typename?: 'Entity', id: number, name: string, itemName: string, listName: string, attributes: Array<{ __typename?: 'Attribute', id: number, name: string, query: string, title: string, type: Type, required?: boolean | null, list?: boolean | null, typeReference?: { __typename?: 'Entity', id: number, name: string } | null, typeReferenceList?: { __typename?: 'Entity', id: number, name: string } | null }>, references: Array<{ __typename?: 'Attribute', id: number, entity: { __typename?: 'Entity', id: number, listName: string } }>, referenceLists: Array<{ __typename?: 'Attribute', id: number, entity: { __typename?: 'Entity', id: number, itemName: string } }> } | null };
+export type EntityQuery = { __typename?: 'Query', entity?: { __typename?: 'Entity', id: number, name: string, itemName: string, listName: string, attributes: Array<{ __typename?: 'Attribute', id: number, name: string, query: string, title: string, type: Type, required?: boolean | null, list?: boolean | null, typeReference?: { __typename?: 'Entity', id: number, name: string } | null, typeReferenceList?: { __typename?: 'Entity', id: number, name: string } | null }>, references: Array<{ __typename?: 'Attribute', id: number, name: string, entity: { __typename?: 'Entity', id: number, listName: string } }>, referenceLists: Array<{ __typename?: 'Attribute', id: number, name: string, entity: { __typename?: 'Entity', id: number, itemName: string } }> } | null };
 
 export type CreateOneEntityMutationVariables = Exact<{
   data: EntityCreateInput;
@@ -1583,8 +1792,8 @@ export type DeleteOneEntityMutation = { __typename?: 'Mutation', deleteOneEntity
 
 
 export const AttributesDocument = `
-    query Attributes($orderBy: [AttributeOrderByWithRelationInput!]) {
-  attributes(orderBy: $orderBy) {
+    query Attributes($orderBy: [AttributeOrderByWithRelationInput!], $where: AttributeWhereInput) {
+  attributes(orderBy: $orderBy, where: $where) {
     id
     name
   }
@@ -1615,6 +1824,10 @@ export const AttributeDocument = `
       name
     }
     typeReferenceList {
+      id
+      name
+    }
+    typeReferencePresent {
       id
       name
     }
@@ -1729,6 +1942,7 @@ export const EntityDocument = `
     }
     references {
       id
+      name
       entity {
         id
         listName
@@ -1736,6 +1950,7 @@ export const EntityDocument = `
     }
     referenceLists {
       id
+      name
       entity {
         id
         itemName
