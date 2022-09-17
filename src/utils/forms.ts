@@ -8,23 +8,25 @@ type UseXFormProps<TFieldValues> = {
 };
 
 export const useXForm = <TFieldValues extends FieldValues = FieldValues>(options?: UseXFormProps<TFieldValues>) => {
-  const [changes, change] = React.useState<Partial<TFieldValues>>({});
+  // copy values to inner state
+  const [values, setValues] = React.useState<Partial<TFieldValues>>(options?.defaultValues ?? {});
+  React.useEffect(() => setValues(options?.defaultValues ?? {}), [options?.defaultValues]);
 
-  const reset = (resetValues: Partial<TFieldValues>) => {
-    resetValues && change(resetValues);
-  };
+  // const reset = (key: keyof TFieldValues) => {
+  //   setValues({ ...values, [key]: undefined });
+  // };
 
   const input = (key: keyof TFieldValues) => {
     return {
       disabled: options?.disabled, // TODO skeleton onLoading?
-      value: (changes[key] || options?.defaultValues?.[key]) as any,
-      onChangeValue: (value: any) => change({ ...changes, [key]: value }),
+      value: values?.[key] as any,
+      onChangeValue: (value: any) => setValues({ ...values, [key]: value }),
     };
   };
 
   const handleSubmit = (callback: (data: Partial<TFieldValues>) => void) => (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    callback(changes);
+    callback(values);
   };
 
   const button = (type?: 'reset' | 'button' | 'submit') => ({
@@ -32,13 +34,9 @@ export const useXForm = <TFieldValues extends FieldValues = FieldValues>(options
     disabled: options?.disabled, // TODO spinner icon onLoading?
   });
 
-  React.useEffect(() => {
-    if (!options?.defaultValues) reset({});
-  }, [options?.defaultValues]);
-
   return {
-    changes,
-    reset,
+    values,
+    //reset,
     input,
     button,
     handleSubmit,

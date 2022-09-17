@@ -24,6 +24,7 @@ export type ButtonSelectProps<DataType = any> = {
 
   value?: DataType;
   onChangeValue?: (value: DataType) => void;
+  onChange?: (evt: React.MouseEvent<HTMLButtonElement>) => void;
 };
 
 export const ButtonSelect: React.FC<ButtonSelectProps> = ({
@@ -34,11 +35,16 @@ export const ButtonSelect: React.FC<ButtonSelectProps> = ({
   present,
   value,
   onChangeValue,
+  onChange,
   ...props
 }) => {
   const styles = useStyles(ds);
 
-  const button = value ? present(value) : placeholder;
+  // copy value to inner state
+  const [innerValue, setInnerValue] = React.useState(value);
+  React.useEffect(() => setInnerValue(value), [value]);
+
+  const button = innerValue ? present(innerValue) : placeholder;
 
   const trigger = React.useRef(null);
   const content = React.useRef(null);
@@ -67,9 +73,10 @@ export const ButtonSelect: React.FC<ButtonSelectProps> = ({
               <li key={i}>
                 <Button
                   variant='select-item'
-                  onClick={() => {
-                    // setInnerValue(value);
+                  onClick={(evt) => {
+                    setInnerValue(value);
                     onChangeValue && onChangeValue(value);
+                    onChange && onChange(evt);
                     popover.close();
                   }}
                 >

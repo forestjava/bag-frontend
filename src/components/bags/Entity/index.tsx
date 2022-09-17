@@ -20,7 +20,7 @@ export const Entity = () => {
   const { id: parameter } = useParams();
   const id = parameter ? parseInt(parameter) : undefined;
 
-  const { isCreate, input, button, remove, submit, entity, reset } = useEntityForm(id);
+  const { isCreate, input, button, remove, submit, values } = useEntityForm(id);
 
   const styles = useStyles(ds);
 
@@ -36,7 +36,7 @@ export const Entity = () => {
           <>
             <Heading variant='top'>Attributes</Heading>
             <Box className='flex flex-col gap-1'>
-              {entity?.attributes?.map((attribute) => (
+              {values?.attributes?.map((attribute) => (
                 <NavLink
                   key={attribute.id}
                   to={`${attribute.id}`}
@@ -45,7 +45,7 @@ export const Entity = () => {
                   {attribute.name}
                 </NavLink>
               ))}
-              {entity?.references?.map((attribute) => (
+              {values?.references?.map((attribute) => (
                 <NavLink
                   key={attribute.id}
                   to={`/edit/${attribute.entity.id}/${attribute.id}`}
@@ -54,7 +54,7 @@ export const Entity = () => {
                   {`${attribute.entity.listName}:${attribute.name}`}
                 </NavLink>
               ))}
-              {entity?.referenceLists?.map((attribute) => (
+              {values?.referenceLists?.map((attribute) => (
                 <NavLink
                   key={attribute.id}
                   to={`/edit/${attribute.entity.id}/${attribute.id}`}

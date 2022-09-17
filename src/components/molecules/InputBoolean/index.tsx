@@ -20,7 +20,7 @@ export const InputBoolean: React.FC<Props> = ({ label, className, value, onChang
         className={className}
         disabled={disabled}
         required={required}
-        checked={value}
+        checked={value ? true : false} // controlled component
         onChange={(evt) => onChangeValue && onChangeValue(evt.target.checked)}
       />
     </Box>

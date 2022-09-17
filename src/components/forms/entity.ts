@@ -32,7 +32,7 @@ export const useEntityForm = (id?: number) => {
   const navigate = useNavigate();
 
   const createElement = async () => {
-    const data = form.changes;
+    const data = form.values;
     const input: EntityCreateInput = {
       name: data.name!,
       itemName: data.itemName!,
@@ -44,16 +44,15 @@ export const useEntityForm = (id?: number) => {
   };
 
   const updateElement = async () => {
-    const data = form.changes;
-    if (Object.keys(data).length) {
-      const input: EntityUpdateInput = {};
-      data.name && (input.name = { set: data.name });
-      data.itemName && (input.itemName = { set: data.itemName });
-      data.listName && (input.listName = { set: data.listName });
-      await update({ where: key, data: input });
-      await invalidate(LIST_QUERY_KEY);
-      await invalidate(ITEM_QUERY_KEY);
-    }
+    const data = form.values;
+    const input: EntityUpdateInput = {};
+    input.name = { set: data.name };
+    input.itemName = { set: data.itemName };
+    input.listName = { set: data.listName };
+    //
+    await update({ where: key, data: input });
+    await invalidate(LIST_QUERY_KEY);
+    await invalidate(ITEM_QUERY_KEY);
   };
 
   const removeElement = async () => {
@@ -75,9 +74,7 @@ export const useEntityForm = (id?: number) => {
     remove: removeElement,
     update: updateElement,
     submit: form.handleSubmit(submit),
-    entity: data?.entity,
-    values: { ...data?.entity, ...form.changes },
-    reset: form.reset,
+    values: form.values,
   };
 };
 

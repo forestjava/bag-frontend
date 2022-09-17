@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { Box } from '@components/atoms/Box';
 import { Button } from '@components/atoms/Button';
 import { Form } from '@components/atoms/Form';
@@ -20,6 +22,13 @@ export const Attribute = () => {
   const id = parameterAttributeId ? parseInt(parameterAttributeId) : undefined;
 
   const { isCreate, input, button, remove, submit, values } = useAttributeForm(entityId, id);
+  // React.useEffect(() => {
+  //   reset('typeReference');
+  //   reset('typeReferenceList');
+  // }, [values.type]);
+  // React.useEffect(() => {
+  //   reset('typeReferencePresent');
+  // }, [values.typeReference, values.typeReferenceList]);
 
   return (
     <Box className='flex flex-col gap-4 py-4'>
@@ -31,18 +40,26 @@ export const Attribute = () => {
 
         <Box variant='label-input-group'>
           <label>Type</label>
-          <Box variant='buttons-row'>
+          <Box className='grid grid-cols-[repeat(3,1fr)] gap-2'>
             <TypesButtonSelect {...input('type')} className='pr-10' />
             {values.type === Type.Reference && (
               <>
                 <EntititesButtonSelect {...input('typeReference')} />
-                <AttributesButtonSelect entityId={values.typeReference?.id!} {...input('typeReferencePresent')} />
+                <AttributesButtonSelect
+                  entityId={values.typeReference?.id!}
+                  {...input('typeReferencePresent')}
+                  className='w-full'
+                />
               </>
             )}
             {values.type === Type.ReferenceList && (
               <>
                 <EntititesButtonSelect {...input('typeReferenceList')} />
-                <AttributesButtonSelect entityId={values.typeReferenceList?.id!} {...input('typeReferencePresent')} />
+                <AttributesButtonSelect
+                  entityId={values.typeReferenceList?.id!}
+                  {...input('typeReferencePresent')}
+                  className='w-full'
+                />
               </>
             )}
           </Box>
