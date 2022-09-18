@@ -75,6 +75,8 @@ export const useEntityForm = (id?: number) => {
     update: updateElement,
     submit: form.handleSubmit(submit),
     values: form.values,
+    reset: form.reset,
+    modified: form.modified,
   };
 };
 

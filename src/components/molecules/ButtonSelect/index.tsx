@@ -24,7 +24,6 @@ export type ButtonSelectProps<DataType = any> = {
 
   value?: DataType;
   onChangeValue?: (value: DataType) => void;
-  onChange?: (evt: React.MouseEvent<HTMLButtonElement>) => void;
 };
 
 export const ButtonSelect: React.FC<ButtonSelectProps> = ({
@@ -35,7 +34,6 @@ export const ButtonSelect: React.FC<ButtonSelectProps> = ({
   present,
   value,
   onChangeValue,
-  onChange,
   ...props
 }) => {
   const styles = useStyles(ds);
@@ -73,10 +71,9 @@ export const ButtonSelect: React.FC<ButtonSelectProps> = ({
               <li key={i}>
                 <Button
                   variant='select-item'
-                  onClick={(evt) => {
+                  onClick={() => {
                     setInnerValue(value);
                     onChangeValue && onChangeValue(value);
-                    onChange && onChange(evt);
                     popover.close();
                   }}
                 >

@@ -21,61 +21,64 @@ export const Attribute = () => {
   const { attribute: parameterAttributeId } = useParams();
   const id = parameterAttributeId ? parseInt(parameterAttributeId) : undefined;
 
-  const { isCreate, input, button, remove, submit, values } = useAttributeForm(entityId, id);
-  // React.useEffect(() => {
-  //   reset('typeReference');
-  //   reset('typeReferenceList');
-  // }, [values.type]);
-  // React.useEffect(() => {
-  //   reset('typeReferencePresent');
-  // }, [values.typeReference, values.typeReferenceList]);
+  const form = useAttributeForm(entityId, id);
+  React.useEffect(() => {
+    if (form.modified) {
+      form.reset({ ...form.values, typeReference: undefined, typeReferenceList: undefined });
+    }
+  }, [form.modified, form.values.type]);
+  React.useEffect(() => {
+    if (form.modified) {
+      form.reset({ ...form.values, typeReferencePresent: undefined });
+    }
+  }, [form.modified, form.values.typeReference, form.values.typeReferenceList]);
 
   return (
     <Box className='flex flex-col gap-4 py-4'>
       <Heading variant='top'>Attribute</Heading>
-      <Form onSubmit={submit}>
-        <InputLabel label='Name' {...input('name')} />
-        <InputLabel label='Query' {...input('query')} />
-        <InputLabel label='Title' {...input('title')} />
+      <Form onSubmit={form.submit}>
+        <InputLabel label='Name' {...form.input('name')} />
+        <InputLabel label='Query' {...form.input('query')} />
+        <InputLabel label='Title' {...form.input('title')} />
 
         <Box variant='label-input-group'>
           <label>Type</label>
           <Box className='grid grid-cols-[repeat(3,1fr)] gap-2'>
-            <TypesButtonSelect {...input('type')} className='pr-10' />
-            {values.type === Type.Reference && (
+            <TypesButtonSelect {...form.input('type')} className='pr-10' />
+            {form.values.type === Type.Reference && (
               <>
-                <EntititesButtonSelect {...input('typeReference')} />
+                <EntititesButtonSelect {...form.input('typeReference')} />
                 <AttributesButtonSelect
-                  entityId={values.typeReference?.id!}
-                  {...input('typeReferencePresent')}
+                  entityId={form.values.typeReference?.id}
+                  {...form.input('typeReferencePresent')}
                   className='w-full'
                 />
               </>
             )}
-            {values.type === Type.ReferenceList && (
+            {form.values.type === Type.ReferenceList && (
               <>
-                <EntititesButtonSelect {...input('typeReferenceList')} />
+                <EntititesButtonSelect {...form.input('typeReferenceList')} />
                 <AttributesButtonSelect
-                  entityId={values.typeReferenceList?.id!}
-                  {...input('typeReferencePresent')}
+                  entityId={form.values.typeReferenceList?.id}
+                  {...form.input('typeReferencePresent')}
                   className='w-full'
                 />
               </>
             )}
           </Box>
         </Box>
-        <InputBoolean label='Required' {...input('required')} />
-        <InputBoolean label='Show in list' {...input('list')} />
+        <InputBoolean label='Required' {...form.input('required')} />
+        <InputBoolean label='Show in list' {...form.input('list')} />
 
         <Box variant='buttons-row'>
-          {!isCreate && (
-            <Button variant='dangerous' onClick={remove} {...button()}>
+          {!form.isCreate && (
+            <Button variant='dangerous' onClick={form.remove} {...form.button()}>
               Remove
             </Button>
           )}
           <Box className='w-full' />
-          <Button variant='primary' {...button('submit')}>
-            {isCreate ? 'Add' : 'Save'}
+          <Button variant='primary' {...form.button('submit')}>
+            {form.isCreate ? 'Add' : 'Save'}
           </Button>
         </Box>
       </Form>

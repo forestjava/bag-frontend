@@ -6,11 +6,10 @@ type Props = {
   className?: string;
   value?: Partial<EntitiesQuery['entities']>;
   onChangeValue?: (value: Partial<EntitiesQuery['entities']>) => void;
-  onChange?: (evt: React.MouseEvent<HTMLButtonElement>) => void;
   disabled?: boolean;
   required?: boolean;
 };
-export const EntititesButtonSelect: React.FC<Props> = ({ className, value, onChangeValue, onChange, disabled }) => {
+export const EntititesButtonSelect: React.FC<Props> = ({ className, value, onChangeValue, disabled }) => {
   const { data } = useEntitiesQuery({ orderBy: { id: SortOrder.Asc } });
   return data ? (
     <ButtonSelect
@@ -20,7 +19,6 @@ export const EntititesButtonSelect: React.FC<Props> = ({ className, value, onCha
       present={(entity) => entity.name}
       value={value}
       onChangeValue={onChangeValue}
-      onChange={onChange}
       disabled={disabled}
     />
   ) : null;

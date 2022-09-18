@@ -20,23 +20,23 @@ export const Entity = () => {
   const { id: parameter } = useParams();
   const id = parameter ? parseInt(parameter) : undefined;
 
-  const { isCreate, input, button, remove, submit, values } = useEntityForm(id);
+  const form = useEntityForm(id);
 
   const styles = useStyles(ds);
 
   return (
     <Box className='flex flex-col gap-4 py-4'>
       <Heading variant='top'>Entity</Heading>
-      <Form onSubmit={submit}>
-        <InputLabel label='Name' {...input('name')} />
-        <InputLabel label='Item Name' {...input('itemName')} />
-        <InputLabel label='List Name' {...input('listName')} />
+      <Form onSubmit={form.submit}>
+        <InputLabel label='Name' {...form.input('name')} />
+        <InputLabel label='Item Name' {...form.input('itemName')} />
+        <InputLabel label='List Name' {...form.input('listName')} />
 
-        {!isCreate && (
+        {!form.isCreate && (
           <>
             <Heading variant='top'>Attributes</Heading>
-            <Box className='flex flex-col gap-1'>
-              {values?.attributes?.map((attribute) => (
+            <Box className='flex flex-col gap-0.5'>
+              {form.values.attributes?.map((attribute) => (
                 <NavLink
                   key={attribute.id}
                   to={`${attribute.id}`}
@@ -45,40 +45,49 @@ export const Entity = () => {
                   {attribute.name}
                 </NavLink>
               ))}
-              {values?.references?.map((attribute) => (
+              {form.values.references?.map((attribute) => (
                 <NavLink
                   key={attribute.id}
                   to={`/edit/${attribute.entity.id}/${attribute.id}`}
                   className={({ isActive }) => cn(styles.link, isActive && styles.active)}
                 >
-                  {`${attribute.entity.listName}:${attribute.name}`}
+                  {`${attribute.entity.listName} <- ${attribute.name}`}
                 </NavLink>
               ))}
-              {values?.referenceLists?.map((attribute) => (
+              {form.values.referenceLists?.map((attribute) => (
                 <NavLink
                   key={attribute.id}
                   to={`/edit/${attribute.entity.id}/${attribute.id}`}
                   className={({ isActive }) => cn(styles.link, isActive && styles.active)}
                 >
-                  {`${attribute.entity.itemName}:${attribute.name}`}
+                  {`${attribute.entity.itemName} <- ${attribute.name}`}
                 </NavLink>
               ))}
             </Box>
-            <NavLink to={`new`} className={({ isActive }) => cn(styles.link, styles.add, isActive && styles.active)}>
-              <Plus />
-            </NavLink>
+            <Box className='flex flex-col gap-0.5'>
+              <NavLink to={`new`} className={({ isActive }) => cn(styles.link, styles.add, isActive && styles.active)}>
+                <Plus />
+              </NavLink>
+              {/* <NavLink
+                to={`new?name`}
+                className={({ isActive }) => cn(styles.link, styles.add, isActive && styles.active)}
+              >
+                <Plus />
+                Name
+              </NavLink> */}
+            </Box>
           </>
         )}
 
         <Box variant='buttons-row'>
-          {!isCreate && (
-            <Button variant='dangerous' onClick={remove} {...button()}>
+          {!form.isCreate && (
+            <Button variant='dangerous' onClick={form.remove} {...form.button()}>
               Remove
             </Button>
           )}
           <Box className='w-full' />
-          <Button variant='primary' {...button('submit')}>
-            {isCreate ? 'Add' : 'Save'}
+          <Button variant='primary' {...form.button('submit')}>
+            {form.isCreate ? 'Add' : 'Save'}
           </Button>
         </Box>
       </Form>
