@@ -29,7 +29,7 @@ export type ButtonSelectProps<DataType = any> = {
 export const ButtonSelect: React.FC<ButtonSelectProps> = ({
   className,
   placeholder,
-  // TODO required?: boolean,
+  // TODO required?: boolean checking
   options,
   present,
   value,

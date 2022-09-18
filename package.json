@@ -1,7 +1,12 @@
 {
   "name": "bag-frontend",
+  "description": "BAG: Frontend Application",
+  "author": {
+    "name": "Nikita Biziaev",
+    "email": "cap7goo@gmail.com"
+  },
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",

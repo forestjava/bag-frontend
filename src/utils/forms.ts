@@ -22,7 +22,7 @@ export const useXForm = <TFieldValues extends FieldValues = FieldValues>(options
 
   const input = (key: keyof TFieldValues) => {
     return {
-      disabled: options?.disabled, // TODO skeleton onLoading?
+      disabled: options?.disabled, // TODO? show skeletons instead disabled inputs
       value: state.values?.[key] as any,
       onChangeValue: (value: any) => setState({ values: { ...state.values, [key]: value }, modified: true }),
     };
@@ -35,7 +35,7 @@ export const useXForm = <TFieldValues extends FieldValues = FieldValues>(options
 
   const button = (type?: 'reset' | 'button' | 'submit') => ({
     type,
-    disabled: options?.disabled, // TODO spinner icon onLoading?
+    disabled: options?.disabled, // TODO inner spinner icon onLoading?
   });
 
   return {

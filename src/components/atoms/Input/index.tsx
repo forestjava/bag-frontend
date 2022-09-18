@@ -49,7 +49,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
 
 export type InputLabelProps = InputProps & {
   label: string;
-  isLoading?: boolean; // TODO? show skeleton instead
+  isLoading?: boolean; // TODO? show skeletons instead disabled inputs
 };
 
 export const InputLabel = React.forwardRef<HTMLInputElement, InputLabelProps>(({ label, className, ...props }, ref) => {
