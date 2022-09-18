@@ -9,6 +9,7 @@ query Entity($where: EntityWhereUniqueInput!) {
   entity(where: $where) {
     id
     name
+    description
     itemName
     listName
     attributes {

@@ -33,9 +33,10 @@ export const Entity = () => {
     <Box className='flex flex-col gap-4 py-4'>
       <Heading variant='top'>Entity</Heading>
       <Form onSubmit={form.submit}>
-        <InputLabel label='Name' {...form.input('name')} />
-        <InputLabel label='Item Name' {...form.input('itemName')} />
-        <InputLabel label='List Name' {...form.input('listName')} />
+        <InputLabel label='Name*' {...form.input('name')} />
+        <InputLabel label='Description' {...form.input('description')} />
+        <InputLabel label='Item Name (singular)*' {...form.input('itemName')} />
+        <InputLabel label='List Name (plural)*' {...form.input('listName')} />
 
         {!form.isCreate && (
           <>
@@ -80,7 +81,6 @@ export const Entity = () => {
                     <Plus />
                     {attribute.entity.listName} {attribute.type === Type.Reference ? '1' : '∞'}:∞
                   </NavLink>
-                  <span className='text-xs text-silver-400'>{attribute.typeReferenceRelation}</span>
                 </Box>
               ))}
             </Box>

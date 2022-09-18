@@ -35,6 +35,7 @@ export const useEntityForm = (id?: number) => {
     const data = form.values;
     const input: EntityCreateInput = {
       name: data.name!,
+      description: data.description,
       itemName: data.itemName!,
       listName: data.listName!,
     };
@@ -47,6 +48,7 @@ export const useEntityForm = (id?: number) => {
     const data = form.values;
     const input: EntityUpdateInput = {};
     input.name = { set: data.name };
+    input.description = { set: data.description };
     input.itemName = { set: data.itemName };
     input.listName = { set: data.listName };
     //

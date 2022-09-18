@@ -1,6 +1,6 @@
 import { ButtonSelect } from '@components/molecules/ButtonSelect';
 import React from 'react';
-import { EntitiesQuery, SortOrder, useAttributesQuery, useEntitiesQuery } from '../../../generated/graphql';
+import { EntitiesQuery, SortOrder, Type, useAttributesQuery, useEntitiesQuery } from '../../../generated/graphql';
 
 type Props = {
   entityId?: number;
@@ -19,11 +19,13 @@ export const AttributesButtonSelect: React.FC<Props> = ({ entityId, className, v
     },
   );
 
+  const only = [Type.String, Type.Number, Type.Boolean, Type.Datetime];
+
   return data ? (
     <ButtonSelect
       className={className}
       placeholder='Select present attribute'
-      options={data.attributes}
+      options={data.attributes.filter((attr) => only.includes(attr.type))}
       present={(item) => item.name}
       value={value}
       onChangeValue={onChangeValue}

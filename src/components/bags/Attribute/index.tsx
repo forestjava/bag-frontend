@@ -76,11 +76,11 @@ export const Attribute = () => {
     <Box className='flex flex-col gap-4 py-4'>
       <Heading variant='top'>Attribute</Heading>
       <Form onSubmit={form.submit}>
-        <InputLabel label='Name' {...form.input('name')} />
-        <InputLabel label='Title' {...form.input('title')} />
+        <InputLabel label='Name*' {...form.input('name')} />
+        <InputLabel label='Title*' {...form.input('title')} />
 
         <Box variant='label-input-group'>
-          <label>Type</label>
+          <label>Type*</label>
           <Box className='grid grid-cols-[repeat(3,1fr)] gap-2'>
             <TypesButtonSelect {...form.input('type')} className='pr-10' />
             {(form.values.type === Type.Reference || form.values.type === Type.ReferenceList) && (
@@ -95,11 +95,16 @@ export const Attribute = () => {
             )}
           </Box>
           {form.values.typeReferenceRelation && (
-            <span className='text-xs text-silver-400'>{form.values.typeReferenceRelation}</span>
+            <span className='text-xs text-silver-300'>{form.values.typeReferenceRelation}</span>
           )}
         </Box>
-        <InputBoolean label='Required' {...form.input('required')} />
-        <InputBoolean label='Show in list' {...form.input('list')} />
+        {form.values.type !== Type.ReferenceList && (
+          <>
+            <InputLabel label='Placeholder' {...form.input('placeholder')} />
+            <InputBoolean label='Required' {...form.input('required')} />
+            <InputBoolean label='Show in list' {...form.input('list')} />
+          </>
+        )}
 
         <Box variant='buttons-row'>
           {!form.isCreate && (

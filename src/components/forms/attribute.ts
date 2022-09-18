@@ -44,6 +44,7 @@ export const useAttributeForm = (entityId: number, id?: number) => {
     form.values.typeReference?.id && (input.typeReference = { connect: { id: form.values.typeReference.id } });
     form.values.typeReferencePresent &&
       (input.typeReferencePresent = { connect: { id: form.values.typeReferencePresent.id } });
+    input.placeholder = form.values.placeholder;
     input.required = form.values.required;
     input.list = form.values.list;
     // provide relation if not yet
@@ -71,6 +72,7 @@ export const useAttributeForm = (entityId: number, id?: number) => {
       input.typeReference = { disconnect: true };
       input.typeReferencePresent = { disconnect: true };
     }
+    input.placeholder = { set: form.values.placeholder };
     input.required = { set: form.values.required };
     input.list = { set: form.values.list };
     // update relation if relation's type changed

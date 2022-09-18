@@ -2,6 +2,7 @@ query Attributes($orderBy: [AttributeOrderByWithRelationInput!], $where: Attribu
   attributes(orderBy: $orderBy, where: $where) {
     id
     name
+    type
   }
 }
 
@@ -20,6 +21,7 @@ query Attribute($where: AttributeWhereUniqueInput!) {
       name
     }
     typeReferenceRelation
+    placeholder
     required
     list
     entity {
