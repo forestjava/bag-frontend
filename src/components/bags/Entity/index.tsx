@@ -15,6 +15,7 @@ import cn from '@utils/classnames'; // classnames
 import ds from '../links.module.css'; // default styles
 import { useStyles } from '@components/providers/StylesProvider';
 import { ReactComponent as Plus } from '@assets/plus.svg';
+import { EntitiesQuery, Type } from '../../../generated/graphql';
 
 export const Entity = () => {
   const { id: parameter } = useParams();
@@ -23,6 +24,10 @@ export const Entity = () => {
   const form = useEntityForm(id);
 
   const styles = useStyles(ds);
+
+  const notName = !form.values.attributes?.find((attribute) => attribute.name === 'name');
+  const notConnected = (attr: { typeReferenceRelation?: string | null }) =>
+    !form.values.attributes?.find((attribute) => attribute.typeReferenceRelation === attr.typeReferenceRelation);
 
   return (
     <Box className='flex flex-col gap-4 py-4'>
@@ -45,36 +50,39 @@ export const Entity = () => {
                   {attribute.name}
                 </NavLink>
               ))}
-              {form.values.references?.map((attribute) => (
-                <NavLink
-                  key={attribute.id}
-                  to={`/edit/${attribute.entity.id}/${attribute.id}`}
-                  className={({ isActive }) => cn(styles.link, isActive && styles.active)}
-                >
-                  {`${attribute.entity.listName} <- ${attribute.name}`}
-                </NavLink>
-              ))}
-              {form.values.referenceLists?.map((attribute) => (
-                <NavLink
-                  key={attribute.id}
-                  to={`/edit/${attribute.entity.id}/${attribute.id}`}
-                  className={({ isActive }) => cn(styles.link, isActive && styles.active)}
-                >
-                  {`${attribute.entity.itemName} <- ${attribute.name}`}
-                </NavLink>
-              ))}
             </Box>
             <Box className='flex flex-col gap-0.5'>
               <NavLink to={`new`} className={({ isActive }) => cn(styles.link, styles.add, isActive && styles.active)}>
                 <Plus />
               </NavLink>
-              {/* <NavLink
-                to={`new?name`}
-                className={({ isActive }) => cn(styles.link, styles.add, isActive && styles.active)}
-              >
-                <Plus />
-                Name
-              </NavLink> */}
+              {notName && (
+                <NavLink
+                  to={`new/name`}
+                  className={({ isActive }) => cn(styles.link, styles.add, isActive && styles.active)}
+                >
+                  <Plus />
+                  name
+                </NavLink>
+              )}
+              {form.values.references?.filter(notConnected).map((attribute) => (
+                <Box key={attribute.typeReferenceRelation} className='flex flex-row gap-0.5'>
+                  <NavLink
+                    to={`new/connect/1/${attribute.id}`}
+                    className={({ isActive }) => cn(styles.link, styles.add, isActive && styles.active)}
+                  >
+                    <Plus />
+                    {attribute.entity.itemName} {attribute.type === Type.Reference ? '1' : '∞'}:1
+                  </NavLink>
+                  <NavLink
+                    to={`new/connect/n/${attribute.id}`}
+                    className={({ isActive }) => cn(styles.link, styles.add, isActive && styles.active)}
+                  >
+                    <Plus />
+                    {attribute.entity.listName} {attribute.type === Type.Reference ? '1' : '∞'}:∞
+                  </NavLink>
+                  <span className='text-xs text-silver-400'>{attribute.typeReferenceRelation}</span>
+                </Box>
+              ))}
             </Box>
           </>
         )}

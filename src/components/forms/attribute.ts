@@ -1,4 +1,5 @@
 import React from 'react';
+import { v4 as uuid } from 'uuid';
 
 import {
   useAttributeQuery,
@@ -34,22 +35,22 @@ export const useAttributeForm = (entityId: number, id?: number) => {
   const navigate = useNavigate();
 
   const createElement = async () => {
-    const data = form.values;
     const input: AttributeCreateInput = {
       entity: { connect: { id: entityId } },
-      name: data.name!,
-      query: data.query!,
-      title: data.title!,
-      type: data.type!,
+      name: form.values.name!,
+      title: form.values.title!,
+      type: form.values.type!,
     };
-    if (data.type === Type.Reference) {
-      input.typeReference = { connect: { id: data.typeReference?.id } };
-    } else if (data.type === Type.ReferenceList) {
-      input.typeReferenceList = { connect: { id: data.typeReferenceList?.id } };
+    form.values.typeReference?.id && (input.typeReference = { connect: { id: form.values.typeReference.id } });
+    form.values.typeReferencePresent &&
+      (input.typeReferencePresent = { connect: { id: form.values.typeReferencePresent.id } });
+    input.required = form.values.required;
+    input.list = form.values.list;
+    // provide relation if not yet
+    if (form.values.type === Type.Reference || form.values.type === Type.ReferenceList) {
+      if (form.values.typeReferenceRelation) input.typeReferenceRelation = form.values.typeReferenceRelation;
+      else input.typeReferenceRelation = uuid();
     }
-    data.typeReferencePresent && (input.typeReferencePresent = { connect: { id: data.typeReferencePresent.id } });
-    input.required = data.required;
-    input.list = data.list;
     //
     const { createOneAttribute } = await create({ data: input });
     await invalidate(LIST_QUERY_KEY);
@@ -59,28 +60,29 @@ export const useAttributeForm = (entityId: number, id?: number) => {
   };
 
   const updateElement = async () => {
-    const data = form.values;
     const input: AttributeUpdateInput = {};
-    input.name = { set: data.name };
-    input.query = { set: data.query };
-    input.title = { set: data.title };
-    input.type = { set: data.type };
-    if (data.type === Type.Reference) {
-      input.typeReference = { connect: { id: data.typeReference?.id } };
-      input.typeReferenceList = { disconnect: true };
-      input.typeReferencePresent = { connect: { id: data.typeReferencePresent?.id } };
-    } else if (data.type === Type.ReferenceList) {
-      input.typeReferenceList = { connect: { id: data.typeReferenceList?.id } };
-      input.typeReference = { disconnect: true };
-      input.typeReferencePresent = { connect: { id: data.typeReferencePresent?.id } };
+    input.name = { set: form.values.name };
+    input.title = { set: form.values.title };
+    input.type = { set: form.values.type };
+    if (form.values.type === Type.Reference || form.values.type === Type.ReferenceList) {
+      input.typeReference = { connect: { id: form.values.typeReference?.id } };
+      input.typeReferencePresent = { connect: { id: form.values.typeReferencePresent?.id } };
     } else {
-      input.typeReferenceList = { disconnect: true };
       input.typeReference = { disconnect: true };
       input.typeReferencePresent = { disconnect: true };
     }
-    input.required = { set: data.required };
-    input.list = { set: data.list };
-
+    input.required = { set: form.values.required };
+    input.list = { set: form.values.list };
+    // update relation if relation's type changed
+    if (
+      data &&
+      data.attribute &&
+      data.attribute.type !== form.values.type &&
+      data.attribute.typeReference !== form.values.typeReference
+    ) {
+      input.typeReferenceRelation = { set: uuid() };
+    }
+    //
     await update({ where: key, data: input });
     await invalidate(LIST_QUERY_KEY);
     await invalidate(ITEM_QUERY_KEY);

@@ -14,34 +14,17 @@ query Entity($where: EntityWhereUniqueInput!) {
     attributes {
       id
       name
-      query
-      title
-      type
-      required
-      list
-      typeReference {
-        id
-        name
-      }
-      typeReferenceList {
-        id
-        name
-      }
+      typeReferenceRelation
     }
     references {
       id
       name
-      entity {
-        id
-        listName
-      }
-    }
-    referenceLists {
-      id
-      name
+      type
+      typeReferenceRelation
       entity {
         id
         itemName
+        listName
       }
     }
   }

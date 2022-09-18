@@ -9,14 +9,9 @@ query Attribute($where: AttributeWhereUniqueInput!) {
   attribute(where: $where) {
     id
     name
-    query
     title
     type
     typeReference {
-      id
-      name
-    }
-    typeReferenceList {
       id
       name
     }
@@ -24,8 +19,15 @@ query Attribute($where: AttributeWhereUniqueInput!) {
       id
       name
     }
+    typeReferenceRelation
     required
     list
+    entity {
+      id
+      name
+      itemName
+      listName
+    }
   }
 }
 
