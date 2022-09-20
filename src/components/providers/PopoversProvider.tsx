@@ -1,5 +1,5 @@
 import { createPopper, Placement } from '@popperjs/core';
-import { createContext, FC, ReactNode, RefObject, useContext, useEffect, useLayoutEffect, useState } from 'react';
+import { RefObject, useEffect, useLayoutEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 type Reference = RefObject<HTMLElement> | null;

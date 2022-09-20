@@ -10,7 +10,7 @@ type Props = {
   required?: boolean;
 };
 export const TypesButtonSelect: React.FC<Props> = ({ className, value, onChangeValue, disabled }) => {
-  const options = [Type.String, Type.Number, Type.Boolean, Type.Datetime, Type.Reference, Type.ReferenceList];
+  const options = [Type.String, Type.Number, Type.Boolean, Type.Moment, Type.Reference, Type.ReferenceList];
 
   return (
     <ButtonSelect

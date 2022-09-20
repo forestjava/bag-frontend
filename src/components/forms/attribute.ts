@@ -42,8 +42,7 @@ export const useAttributeForm = (entityId: number, id?: number) => {
       type: form.values.type!,
     };
     form.values.typeReference?.id && (input.typeReference = { connect: { id: form.values.typeReference.id } });
-    form.values.typeReferencePresent &&
-      (input.typeReferencePresent = { connect: { id: form.values.typeReferencePresent.id } });
+    input.present = form.values.present;
     input.placeholder = form.values.placeholder;
     input.required = form.values.required;
     input.list = form.values.list;
@@ -67,11 +66,10 @@ export const useAttributeForm = (entityId: number, id?: number) => {
     input.type = { set: form.values.type };
     if (form.values.type === Type.Reference || form.values.type === Type.ReferenceList) {
       input.typeReference = { connect: { id: form.values.typeReference?.id } };
-      input.typeReferencePresent = { connect: { id: form.values.typeReferencePresent?.id } };
     } else {
       input.typeReference = { disconnect: true };
-      input.typeReferencePresent = { disconnect: true };
     }
+    input.present = { set: form.values.present };
     input.placeholder = { set: form.values.placeholder };
     input.required = { set: form.values.required };
     input.list = { set: form.values.list };

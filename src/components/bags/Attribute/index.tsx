@@ -33,7 +33,7 @@ export const Attribute = () => {
   // auto fill preset
   React.useEffect(() => {
     if (preset === 'name') {
-      form.reset({ name: 'name', title: 'Name', type: Type.String, required: true, list: true });
+      form.reset({ name: 'name', title: 'Name', type: Type.String, present: true, required: true, list: true });
     }
   }, [preset]);
 
@@ -66,11 +66,6 @@ export const Attribute = () => {
       form.reset({ ...form.values, typeReference: undefined });
     }
   }, [form.values.type]);
-  React.useEffect(() => {
-    if (form.modified) {
-      form.reset({ ...form.values, typeReferencePresent: undefined });
-    }
-  }, [form.values.typeReference]);
 
   return (
     <Box className='flex flex-col gap-4 py-4'>
@@ -81,16 +76,11 @@ export const Attribute = () => {
 
         <Box variant='label-input-group'>
           <label>Type*</label>
-          <Box className='grid grid-cols-[repeat(3,1fr)] gap-2'>
+          <Box className='grid grid-cols-[repeat(2,1fr)] gap-2'>
             <TypesButtonSelect {...form.input('type')} className='pr-10' />
             {(form.values.type === Type.Reference || form.values.type === Type.ReferenceList) && (
               <>
                 <EntititesButtonSelect {...form.input('typeReference')} />
-                <AttributesButtonSelect
-                  entityId={form.values.typeReference?.id}
-                  {...form.input('typeReferencePresent')}
-                  className='w-full'
-                />
               </>
             )}
           </Box>
@@ -100,6 +90,7 @@ export const Attribute = () => {
         </Box>
         {form.values.type !== Type.ReferenceList && (
           <>
+            <InputBoolean label='Presentation property' {...form.input('present')} />
             <InputLabel label='Placeholder' {...form.input('placeholder')} />
             <InputBoolean label='Required' {...form.input('required')} />
             <InputBoolean label='Show in list' {...form.input('list')} />

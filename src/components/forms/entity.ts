@@ -7,6 +7,7 @@ import {
   useUpdateOneEntityMutation,
   EntityCreateInput,
   EntityUpdateInput,
+  SortOrder,
 } from '../../generated/graphql';
 
 import { invalidate } from '@components/providers/DataAccessProvider';
@@ -21,7 +22,10 @@ export const useEntityForm = (id?: number) => {
 
   const key = { id };
 
-  const { data, isLoading } = useEntityQuery({ where: key }, { enabled: !isCreate });
+  const { data, isLoading } = useEntityQuery(
+    { where: key, orderAttributesBy: { id: SortOrder.Asc }, orderReferencesBy: { id: SortOrder.Asc } },
+    { enabled: !isCreate },
+  );
 
   const form = useXForm({ defaultValues: data?.entity, disabled: isLoading && !isCreate });
 

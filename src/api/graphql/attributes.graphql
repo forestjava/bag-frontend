@@ -16,11 +16,8 @@ query Attribute($where: AttributeWhereUniqueInput!) {
       id
       name
     }
-    typeReferencePresent {
-      id
-      name
-    }
     typeReferenceRelation
+    present
     placeholder
     required
     list

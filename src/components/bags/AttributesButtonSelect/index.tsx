@@ -19,7 +19,7 @@ export const AttributesButtonSelect: React.FC<Props> = ({ entityId, className, v
     },
   );
 
-  const only = [Type.String, Type.Number, Type.Boolean, Type.Datetime];
+  const only = [Type.String, Type.Number, Type.Boolean, Type.Moment];
 
   return data ? (
     <ButtonSelect

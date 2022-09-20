@@ -1,8 +1,11 @@
 overwrite: true
-schema: 'http://localhost:4000'
+schema:
+  'http://localhost:4000':
+    headers:
+      x-bag-secret: '19c3cd030c3c50a8ab0290c646e08767'
 documents: 'src/**/*.graphql'
 generates:
-  src/generated/graphql.tsx:
+  'src/generated/graphql.ts':
     plugins:
       - 'typescript'
       - 'typescript-operations'

@@ -5,19 +5,23 @@ query Entities($orderBy: [EntityOrderByWithRelationInput!]) {
   }
 }
 
-query Entity($where: EntityWhereUniqueInput!) {
+query Entity(
+  $where: EntityWhereUniqueInput!
+  $orderAttributesBy: [AttributeOrderByWithRelationInput!]
+  $orderReferencesBy: [AttributeOrderByWithRelationInput!]
+) {
   entity(where: $where) {
     id
     name
     description
     itemName
     listName
-    attributes {
+    attributes(orderBy: $orderAttributesBy) {
       id
       name
       typeReferenceRelation
     }
-    references {
+    references(orderBy: $orderReferencesBy) {
       id
       name
       type
