@@ -17,7 +17,7 @@ export const useXForm = <TFieldValues extends FieldValues = FieldValues>(options
   React.useEffect(() => setState(defaultState), [options?.defaultValues]);
 
   const reset = (values: Partial<TFieldValues>) => {
-    setState({ values, modified: true });
+    setState({ values, modified: false });
   };
 
   const input = (key: keyof TFieldValues) => {

@@ -7,11 +7,10 @@ import { Heading } from '@components/atoms/Heading';
 import { InputLabel } from '@components/atoms/Input';
 import { useAttributeForm } from '@components/forms/attribute';
 import { InputBoolean } from '@components/molecules/InputBoolean';
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Type, useAttributeQuery } from '../../../generated/graphql';
 import { TypesButtonSelect } from '../TypesButtonSelect';
 import { EntititesButtonSelect } from '../EntititesButtonSelect';
-import { AttributesButtonSelect } from '../AttributesButtonSelect';
 
 export const Attribute = () => {
   const { id: parameterEntityId, preset, relation, connect } = useParams();
